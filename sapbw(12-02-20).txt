@@ -1,0 +1,345 @@
+BWHK901031 -tr no.
+
+
+-----------------------------------------------question and answer-----------------------
+https://vceguide.com/how-are-hierarchies-in-a-bex-query-represented-in-crystal-reports-for-enterprise/
+--------------------------------------------12-02-2020---------------------------------
+Standard DSO:
+ ZTEST_K7 (info area)
+C_ZTESTK71 (data store object)
+DESCRIPTION NAME: traning
+
+ztestk71 :Traning_DSO
+
+
+ZTEST_K7_WO: write optimised
+
+
+ZTEST_K7_WO :infoarea
+
+
+ztestk7w:dso
+
+
+ztestic: infocube
+
+
+
+
+
+ PROCESS CHAIN
+
+a) RSPC: Process Chain Maintenance
+
+b) RSPC1: Process Chain Display
+
+c) RSPCM: Monitor daily process chains
+
+d) RZ20: To see log for process chains
+
+
+-BWHCLNT800 :source system
+-ZUT_IS_TXT :infosource
+-ZPAK_DVELBQ0SYVCIDJZAO7IRWM734 :infopackage
+-InfoSource Text(ZUT_IS_TXT) :data source 
+-BI Productive client 100(BWHCLNT800) :source system
+
+zpc_18 :process chain tech. name
+process_chain_18 :process chain description name
+- zpc_81_sp :start process tech. name
+-process_chain_start_process: start process desp.name
+
+process chain
+-ZINC_LOAD 
+-zpc_sam
+-z_pc_m
+
+
+characteristics:z_ch1
+
+
+key Figures :z_kf9
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------13-02-2020------------------------------
+ZCUBE_1 :Training real time (dn)
+
+
+zut_aggr_text :dtp(data transfer process)
+
+
+ZMP_14v : multiprovider
+
+
+zadp_1  : adp(analysis process designer)
+
+---------------------------------------------|| contents of SAP BW ||---------------------------------------
+BW system & its version
+Transaction Code (T-Code)
+OLAP vs OLTP
+PSA
+Data Flow
+DSO & its types
+-standard dso
+-write optimised dso
+-direct update dso
+development of various dso
+InfoCubes
+- standard cube
+-real time cube
+- virtual cubes
+E-fact,F-fact cube
+development of various infocubes
+Compression of cubes
+Index 
+-Primary
+-Secondary
+    Bit Map
+    B-Tree index
+partitioning
+-low level
+-high level
+Data Transfer Process
+MultiProvider
+-homogenous
+-heterogenous
+InfoSet
+development of infoset
+Aggregates
+ACR
+APD
+process chain
+types and kinds of data source
+Extraction
+Transformation
+routine in transformation
+logistic data extraction
+why lis source is outdated
+creation of characteristic and keyfigures
+types of characteristics
+setup table
+attributes
+
+-------------------------------------------------------------------------||NEW SAP BW PRACTICAL||----------------------------------------------------------------------
+infoarea:
+
+Z_inara : tech. name
+infoarea traning: desp.name
+BWHK901034 : request ID
+
+dso:
+z_dso_t :tech. name
+dso traning : desp. name
+
+infocube:
+z_incu : tech. name
+infocube traning : desp. name
+
+
+
+
+
+--------------------------------------------------------------------||Diff between DSO vs CUBE||----------------------------------------------------------------
+
+The main difference between the DSO Object and the PSA and InfoCube is that the DSO Object allows existing data to be changed. Whereas an InfoCube principally allows inserts, and only allows deletion on the basis of requests, data in an DSO Object can be changed during the staging process. This enables an DSO Object to be used as a consolidation Object in a Data Warehouse. PSA data change is only supported by manual change or by customer programs and not by the staging mechanism.
+
+Unlike DSO Objects; InfoCubes have a mandatory time-dimension that allows you to look at particular relationships in relation to time-per DSO. For example, you can look at how relationships have changed over a certain time-period.
+
+An DSO Object is principally used for analyzing the status of data at a certain point in time. This allows you to see what relationships are currently like. Exceptionally you can also track history in DSO Objects by adding a date to the key fields of the DSO Object.
+
+It is generally true to say that it is not always necessary to implement DSO Objects in every scenario. Rather, it depends on the requirements of each scenario. You should only use DSO if the requirements of your scenario fit one of the three usage possibilities outlined above (Inbound DSO, Consistent DSO, Application-related DSO). An DSO Object placed in the data flow
+to an InfoCube without having a function does nothing except hinder loading performance.
+
+DSO: Data is stored in 2-dimensional format like a regular table.
+Cube data is stored as star schema (multi dimensional data)
+
+Cube is used mainly used for analytical reports. DSO is used for operational reports.
+
+DSO has the overwrite capability.
+Infocube data will get appended.
+
+DSO gives detailed data, Infocube gives aggregated information
+
+DSO can be used as a datastage and of data consolidation
+
+DSO
+1 flat file format structure
+2 two dimensional
+3 overwrite data functionality
+4 performance is less as compared to cube
+5 detailed form of data
+
+infocube
+1 star schema
+2 16 dimentional
+3 additive data functionality
+4 performance is better as compared to DSO
+5 summerised form of data
+
+
+infocube uses addition property whereas DSO uses overwrite functionality by default. Generally infocube is used when there are no further loads. Coming to DSO it is used as an intermediatory location to store the data and can collect the data from the difference datasources, used for data cleansing.
+
+cube is additive where as DSO ovewrites by default
+cube is for aggregated level of reporting and DSO is for flat data reporting
+DSO is nothing but normal two dimensional table where as cube is multidimensional
+we need to activate the req to have data in DSO but not in cube
+we can maintain aggregates on cube but not on DSO
+DSO is mainly used for staging purpose to support deltas where as cube is to do reporting 
+
+Cube,
+1. It is Multidimensional
+2. It has a Property Additive (This Differs it from DSO)
+
+DSO
+1. It is Two Dimensional Table (As in Database Table in Oracle)
+
+Real Time Example
+
+Let consider the following 2 records has come to BW with same comp code and same Item Data but with Different Transaction data to be loaded in Cube and also DSO
+
+Rec CompCode ItemNo NoofItems
+1.         1199         677             79
+2.         1199         677               0
+
+So Final value should be '0' for Comp Code 1199 and ItemNo 677
+
+Now Lets see what happens in DSO Scenario:
+
+1. When First Record is loaded it will have value like this
+Rec CompCode ItemNo NoofItems
+1.         1199          677            79
+2. When second record come it will be Intenally happining like this
+Rec CompCode ItemNo NoofItems
+2.         1199        677              0 ( Overriden 79 with 0 )
+
+Now Lets see what happens in CUBE Scenario:
+
+1. When First Record is loaded it will have value like this
+Rec CompCode ItemNo NoofItems
+1.         1199           677           79
+2. When second record come it will be Internally happening like this
+Rec CompCode ItemNo NoofItems
+1.         1199           677           -79
+Since the CUBE will not have property of Override it will pass the value as -79 to make it to zero.
+
+DSO is 2 dimensional table which can store a detailed level of data ie line item lvel.
+DSO have overwrite,addition and no update to the fields option.
+
+DSO is mostly used for staging the data from source system and rarely used for report as reports from dso have low perfromance.
+
+Cube is a multidimensional model which have addition and no update option for the key figures.
+
+cubes will have summarized data and is more efficient for reporting.
+
+cube is built in the extended star schema concept which facilitate the sharing of master data.
+
+various performance tuning can be done on cube to improve loading and reporting performance.
+
+
+
+--------------------------------------------------------------||DATA SOURCE||----------------------------------------------------------------------
+A DataSource is a set of fields that provide the data for a business unit for data transfer into BI. From a technical viewpoint, the DataSource is a set of logically-related fields that are provided to transfer data into BI in a flat structure (the extraction structure), or in multiple flat structures (for hierarchies).
+
+There are four types of DataSource:
+
+1.DataSource for transaction data
+  DataSource for master data
+   2.DataSource for attributes
+   3.DataSource for texts
+   4.DataSource for hierarchies
+
+-------------------------------------------------------||creating multiproviders||---------------------------------------------------------------
+
+
+Creating MultiProviders 
+Prerequisites
+There is an active version of each InfoObject that you want to transfer to the MultiProvider. Create any InfoObjects that you require that do not already exist and activate them.
+
+Instead of creating a new MultiProvider, you can install a MultiProvider from SAP Business Content.
+
+Procedure
+       1.      Create an InfoArea to which you want to assign the new MultiProvider.
+
+                 Choose Modeling → InfoProvider.
+
+       2.      In the context menu of the InfoArea, choose Create MultiProvider.
+
+       3.      Enter a technical name and a description.
+
+       4.      Choose This graphic is explained in the accompanying text Create.
+
+       5.      Select the InfoProvider that you want to form the MultiProvider. Choose This graphic is explained in the accompanying text Continue. The MultiProvider                screen appears.
+
+       6.      Use drag and drop to transfer the required InfoObjects into your MultiProvider. You can also transfer entire dimensions.
+
+       7.      Use Identify Characteristics and Select Key Figures to make InfoObject assignments between MultiProviders and InfoProviders.
+
+Note
+
+In a MultiProvider, each InfoObject in the MultiProvider must correspond to exactly one InfoObject in each of the InfoProviders involved (as long as it is available in the MultiProvider). If this mapping is not clear, you have to specify the InfoObject to which you want to assign the InfoObject in the MultiProvider.
+
+See also, Consistency Check for Compounding.
+
+       8.      Save or Activate the MultiProvider. Only active MultiProviders are available for analysis and reporting.
+
+See also:
+
+The additional functions in DataStore object maintenance are also available as additional functions in MultiProvider maintenance. The only exception is the last function listed for performance settings.
+
+ 
+
+End of Content Area
+
+
+
+
+
+
+
+------------------------------------------------------------------||                 ||------------------------------------------------------
+BEx Query Designer
+Integrated Planning
+Source Systems
+Info Provider
+Data Warehousing
+Data Modeling
+BEx Broadcaster
+Scheduling & Monitoring
+Performance Tuning
+Development Interfaces
+Documents
+Meta Data
+Analysis Process Designer
+Info Objects
+Data Flow
+BEx Analyzer
+BEx Report Designer
+
+-------------------------------------------------------------------||logistic vs finance data source||---------------------------------------------
+In LO extraction delta flow as follows
+
+SM13---- LBWQ ---- RSA7
+
+In FI
+
+SM13 ---- RSA7
+
+so in LO extraction there is one additional data queue as shown above..
+
+In FI Extraction............data directly comes from the Application tables..........But in case of LO Extraction...........Application tables cannot be access directly............first we need to fill the Set up table...........and the full update will extract data from this set up table...........due to this ur full load is not picking any records...............after filling the set up table............check in RSA3.........whether it contains records or not.........
+
+For filling set up table...........Tcode : SBIW...........Settings for Application-Specific DataSources (PI)>>Logistics >>Managing Extract Structures >>Initialization >>Filling in the Setup Table >>Application-Specific Setup of Statistical Data >> in that Youcan perform the Setup (Example : SD-Sales Orders - Perform Setup) and execute ...........T Code : OLI*BW * equals to application area number like 02 for purchasing....................
+
+
+Lo extraction for the full load data is taken from SETUP tables to BW when we run Full load.And the deltas are from DeltaQueue.
+FI full load is updated from R/3 system & FI deltas are updated from RSA7 to the BW system.
+
+
