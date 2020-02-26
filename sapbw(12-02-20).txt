@@ -246,6 +246,11 @@ various performance tuning can be done on cube to improve loading and reporting 
 
 
 --------------------------------------------------------------||DATA SOURCE||----------------------------------------------------------------------
+BASIC DEFINATION OF DATA SOURCE:In computer programming, source data or data source is the primary location from where data comes. The data source can be a database, a dataset, a spreadsheet or even hard-coded data. ... A common type of database is an SQL database, but some applications can use other types of databases, like Microsoft Access.
+
+DATA SOURCE/SOURCE SYSTEM:
+Any system that is sending data to BW like R/3, lat file, oracle database or external systems.
+
 A DataSource is a set of fields that provide the data for a business unit for data transfer into BI. From a technical viewpoint, the DataSource is a set of logically-related fields that are provided to transfer data into BI in a flat structure (the extraction structure), or in multiple flat structures (for hierarchies).
 
 There are four types of DataSource:
@@ -255,6 +260,10 @@ There are four types of DataSource:
    2.DataSource for attributes
    3.DataSource for texts
    4.DataSource for hierarchies
+-----------------------------------------------------------||MULTI PROVIDERS||-------------------------------------------------------------
+ Multi-provider is a type of info-provider that contains data from a number of info-providers and makes it available for reporting purposes.
+
+Multi-provider does not contain any data. The data comes entirely from the info providers on which it is based. The info-providers are connected to one another by union operations. Info-providers and Multi-providers are the objects or views relevant for reporting. A multi-provider allows you to run reports using several info-providers that are, it is used for creating reports for one or more than one info-provider at a time.
 
 -------------------------------------------------------||creating multiproviders||---------------------------------------------------------------
 
@@ -343,3 +352,4 @@ Lo extraction for the full load data is taken from SETUP tables to BW when we ru
 FI full load is updated from R/3 system & FI deltas are updated from RSA7 to the BW system.
 
 
+REP_20200226053930: new query on 26feb2020
