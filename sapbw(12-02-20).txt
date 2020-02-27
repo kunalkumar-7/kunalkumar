@@ -1,8 +1,41 @@
 BWHK901031 -tr no.
+-------------------------------------------------from data source to open hub destination--------------------------------------------
+                                           
+Data is extracted from the Source Systems.
+Data is staged at the Persistent Storage Area(PSA). This holds Source like data.
+Data is cleansed, loaded and stored in Data Store Object.
+Data is viewed at multiple dimensions in the Infocube.
+Data is available by the OLAP processor to the Business Explorer to display data as per Analysis requirements of the Business.
+Data can be made available to SAP/Non-SAP, Data Marts by the Open Hub Service.( InfoSpoke).
+
+architecture flow image link : https://www.guru99.com/images/sap/SAP_BI/sap_bi_2_3.jpg
 
 
------------------------------------------------question and answer-----------------------
+------------------------------------------------------------question and answer--------------------
+
+SAP ARCHITECTURE:
+https://www.guru99.com/overview-of-sap-bi-architecture.html
+
 https://vceguide.com/how-are-hierarchies-in-a-bex-query-represented-in-crystal-reports-for-enterprise/
+
+API:
+https://help.sap.com/doc/saphelp_nw70/7.0.31/en-US/2e/260a8563b111d4b2ea0050dadfb23f/content.htm?no_cache=true
+
+SAP Documentation:
+https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/38/ed95d8780b4d67936b2f25be382a5e/frameset.htm
+
+BW CERTIFICATION:
+https://books.google.co.in/books?id=VEGxVL2L0K0C&pg=PA8&lpg=PA8&dq=architecture+of+sap+bw+on+basis+of+extraction,modelling+and+reporting&source=bl&ots=1FAXz4QQTz&sig=ACfU3U2AhcdUKc7DPtEuakwStCHYcO9-Kg&hl=en&sa=X&ved=2ahUKEwjCxMD8i_HnAhWjyDgGHUSkBkcQ6AEwGXoECA0QAQ#v=onepage&q=architecture%20of%20sap%20bw%20on%20basis%20of%20extraction%2Cmodelling%20and%20reporting&f=true
+
+
+BW CERTIFICATION 2:
+https://books.google.co.in/books?id=VEGxVL2L0K0C&lpg=PA8&ots=1FAXz4QQTz&dq=architecture%20of%20sap%20bw%20on%20basis%20of%20extraction%2Cmodelling%20and%20reporting&pg=PA4#v=onepage&q=architecture%20of%20sap%20bw%20on%20basis%20of%20extraction,modelling%20and%20reporting&f=true
+
+SAP HANA:
+https://www.youtube.com/watch?v=s-mfDyhmdl8&feature=youtu.be
+
+SAP BW/BI:
+https://youtu.be/xSyNOQZrnNI
 --------------------------------------------12-02-2020---------------------------------
 Standard DSO:
  ZTEST_K7 (info area)
@@ -85,6 +118,7 @@ zadp_1  : adp(analysis process designer)
 BW system & its version
 Transaction Code (T-Code)
 OLAP vs OLTP
+Modelling:Designing of data base is done by using modelling
 PSA
 Data Flow
 DSO & its types
@@ -119,6 +153,15 @@ APD
 process chain
 types and kinds of data source
 Extraction
+What are the extractors and mention their types?
+
+To extract data from the system program is used which is known as Extractor. The types of extractors in BW are:
+
+a) Application Specific: BW content FI, HR, CO, SAP CRM, LO cockpit
+
+b) Customer-Generated Extractors: LIS, FI-SL, CO-PA
+
+c) Cross Application (Generic Extractors) : DB View,Infoset, Function Module
 Transformation
 routine in transformation
 logistic data extraction
@@ -353,3 +396,16 @@ FI full load is updated from R/3 system & FI deltas are updated from RSA7 to the
 
 
 REP_20200226053930: new query on 26feb2020
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+Processing Type for BEx Report:
+1)Manual entry or default value: The variables that will take the default values of characteristics or the value sholud be entered manually by the user
+2)Replacement path:The variable value get will replaced by someother characteristic or by some other variable or by some other query
+3)Authorization:The variable value can be given by authorised person
+4)Customer exit:The variable value by the user 
+5)SAP exit:The variable is defined by the SAP
