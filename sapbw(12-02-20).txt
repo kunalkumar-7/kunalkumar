@@ -1,5 +1,5 @@
 BWHK901031 -tr no.
--------------------------------------------------from data source to open hub destination--------------------------------------------
+-------------------------------------------------||from data source to open hub destination||--------------------------------------------
                                            
 Data is extracted from the Source Systems.
 Data is staged at the Persistent Storage Area(PSA). This holds Source like data.
@@ -11,7 +11,12 @@ Data can be made available to SAP/Non-SAP, Data Marts by the Open Hub Service.( 
 architecture flow image link : https://www.guru99.com/images/sap/SAP_BI/sap_bi_2_3.jpg
 
 
-------------------------------------------------------------question and answer--------------------
+------------------------------------------------------------||question and answer||--------------------
+IMPORTANT QUESTIONS &TOPICS:
+https://www.erpgreat.com/sap-bw.htm
+
+SAP BW:
+https://www.erpgreat.com/index.htm
 
 SAP ARCHITECTURE:
 https://www.guru99.com/overview-of-sap-bi-architecture.html
@@ -20,6 +25,9 @@ https://vceguide.com/how-are-hierarchies-in-a-bex-query-represented-in-crystal-r
 
 API:
 https://help.sap.com/doc/saphelp_nw70/7.0.31/en-US/2e/260a8563b111d4b2ea0050dadfb23f/content.htm?no_cache=true
+
+INDEX/INDICES:
+https://blogs.sap.com/2013/08/30/sap-bi-index-usage/
 
 SAP Documentation:
 https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/38/ed95d8780b4d67936b2f25be382a5e/frameset.htm
@@ -138,7 +146,7 @@ Index
 -Secondary
     Bit Map
     B-Tree index
-partitioning
+partitioning:SAP is using fact table partitioning to improve the performance. you can partition only on 0CALMONTH or 0FISCPER.
 -low level
 -high level
 Data Transfer Process
@@ -170,6 +178,41 @@ creation of characteristic and keyfigures
 types of characteristics
 setup table
 attributes
+----------------------------------------------------------------||INDEX||---------------------------------------------------------------------
+
+What is meant by Primary Index and Secondary Index
+
+ 
+Explain the what is primary and secondary index.
+
+When you activate an object say ODS / DSO, the system automatically generate an index based on the key fields and this is primary index.
+
+In addition if you wish to create more indexes , then they are called secondary indexes.
+
+The primary index is distinguished from the secondary indexes of a table. The primary index contains the key fields of the table and a pointer to the non-key fields of the table. The primary index is created automatically when the table is created in the database.
+
+You can also create further indexes on a table. These are called secondary indexes. This is necessary if the table is frequently accessed in a way that does not take advantage of the sorting of the primary index for the access. Different indexes on the same table are distinguished with a three-place index identifier. 
+
+Lets say you have an ODS and the Primary Key is defined as Document Nbr, Cal_day. These two fields insure that the records are unqiue, but lets lay you frequently want to run queries where you selct data based on the Bus Area and Document Type. In this case, we could create a secondary index on Bus Area, Doc Type. Then when the query runs, instead of having to read every record, it can use the index to select records that contain just the Bus Area and Doc type values you are looking for.
+
+Just because you have a secondary index however, does not mean it will be used or should be used. This gets into the cardinality of the fields you are thinking about indexing. For most DBs, an index must be fairly selective to be of any value. That is, given the values you provide in a query for Bus Area and Doc Type, if it will retrieve a very small percentage of the rows form the table, the DB probably should use the index, but if the it would result in retrieving say 40% of the rows, it si almost always better to just read the entire table. 
+
+Having current DB statististics and possibly histograms can be very important as well. The DB statistics hold information on how many distinct values a field has, e.g. how many distinct values of Business Area are there, how many doc types. 
+
+Secondary indexes are usally added to ODS (which you can add using Admin Wkbench) based on your most frequently used queries. Secondary indexes might also be added to selected Dimension and Master data tables as well, but that usually requires a DBA, or someone with similar privileges to create in BW. 
+
+
+Ahh, I think most of the people thought you were talking about DSO's. A DSO is just a straight table with a primary key. (And you can add secondary indexes by right clicking on "Indexes" at the bottom of the right frame (Below Key Fields and Data Fields and Navigational Attributes). And then dragging the fields you want to make up the secondary index.
+
+For Cubes you have 1 central fact table and many dimension tables that are attached to it. When you create Indexes on a Cube it creates the indexes for all of these tables.
+
+Standard practice in process chains is to have a "Delete Index" job followed by DTP to load the cube followed by "Generate Index" job. (Located under "Data Target Administration drop down in Process Chain maintenance T-Code RSPC)
+
+Doing this should increase performance of queries over this cube.
+
+question:But what is happening if we creat db indexes on InfoCube without delete this indexes before ? The system overwrite infocube indexes ?
+answer:Without deleting previous indexes if you create new indexes then old indexes will get overwritten with new index.
+
 
 -------------------------------------------------------------------------||NEW SAP BW PRACTICAL||----------------------------------------------------------------------
 infoarea:
@@ -227,6 +270,10 @@ infocube
 4 performance is better as compared to DSO
 5 summerised form of data
 
+
+
+
+SAP is using fact table partitioning to improve the performance. you can partition only on 0CALMONTH or 0FISCPER.
 
 infocube uses addition property whereas DSO uses overwrite functionality by default. Generally infocube is used when there are no further loads. Coming to DSO it is used as an intermediatory location to store the data and can collect the data from the difference datasources, used for data cleansing.
 
@@ -292,7 +339,7 @@ various performance tuning can be done on cube to improve loading and reporting 
 BASIC DEFINATION OF DATA SOURCE:In computer programming, source data or data source is the primary location from where data comes. The data source can be a database, a dataset, a spreadsheet or even hard-coded data. ... A common type of database is an SQL database, but some applications can use other types of databases, like Microsoft Access.
 
 DATA SOURCE/SOURCE SYSTEM:
-Any system that is sending data to BW like R/3, lat file, oracle database or external systems.
+Any system that is sending data to BW like R/3, flat file, oracle database or external systems.
 
 A DataSource is a set of fields that provide the data for a business unit for data transfer into BI. From a technical viewpoint, the DataSource is a set of logically-related fields that are provided to transfer data into BI in a flat structure (the extraction structure), or in multiple flat structures (for hierarchies).
 
