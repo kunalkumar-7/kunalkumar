@@ -15,6 +15,11 @@ architecture flow image link : https://www.guru99.com/images/sap/SAP_BI/sap_bi_2
 IMPORTANT QUESTIONS &TOPICS:
 https://www.erpgreat.com/sap-bw.htm
 
+
+
+SAP BW PDF:
+https://www.academia.edu/4491405/SAP_BI_BW_extraction
+
 SAP BW:
 https://www.erpgreat.com/index.htm
 
